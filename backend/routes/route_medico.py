@@ -5,6 +5,8 @@ from drivers.controlador_medico import (
     update_medico,
     delete_medico
 )
+from flask import jsonify
+from drivers.controlador_medico import get_horarios_por_especialidad_y_fecha
 
 medico_bp = Blueprint('medico', __name__)
 
@@ -12,6 +14,25 @@ medico_bp = Blueprint('medico', __name__)
 @medico_bp.route("/", methods=["GET"])
 def listar_medicos():
     return get_medicos()
+
+
+@medico_bp.route('/especialidad/<int:idEspecialidad>', methods=['GET'])
+def medicos_por_especialidad(idEspecialidad):
+    try:
+        from drivers.controlador_medico import get_medicos_con_horarios_por_especialidad
+        return get_medicos_con_horarios_por_especialidad(idEspecialidad)
+    except Exception as e:
+        # devolver un JSON consistente en caso de error
+        return jsonify({'error': str(e)}), 500
+
+
+@medico_bp.route('/especialidad/<int:idEspecialidad>/horarios', methods=['GET'])
+def horarios_por_especialidad_y_fecha(idEspecialidad):
+    fecha = request.args.get('fecha')
+    if not fecha:
+        return jsonify({'error': 'Parámetro fecha requerido (YYYY-MM-DD)'}), 400
+
+    return get_horarios_por_especialidad_y_fecha(idEspecialidad, fecha)
 
 
 #POST

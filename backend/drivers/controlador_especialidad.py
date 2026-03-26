@@ -19,7 +19,7 @@ def get_especialidades():
     cursor.close()
     conexion.close()
 
-    return jsonify(resultado)
+    return jsonify(resultado), 200
 
 
 def create_especialidad(nombEspecialidad):
@@ -32,10 +32,10 @@ def create_especialidad(nombEspecialidad):
             (nombEspecialidad,)
         )
         conexion.commit()
-        return {"mensaje": "Especialidad creada"}
+        return jsonify({"mensaje": "Especialidad creada"}), 201
     
     except Exception as e:
-        return {"error": str(e)}
+        return jsonify({"error": str(e)}), 500
     
     finally:
         cursor.close()
@@ -52,10 +52,12 @@ def update_especialidad(idEspecialidad, nombEspecialidad):
             (nombEspecialidad, idEspecialidad)
         )
         conexion.commit()
-        return {"mensaje": "Especialidad actualizada"}
+        if cursor.rowcount == 0:
+            return jsonify({"mensaje": "No existe"}), 404
+        return jsonify({"mensaje": "Especialidad actualizada"}), 200
     
     except Exception as e:
-        return {"error": str(e)}
+        return jsonify({"error": str(e)}), 500
     
     finally:
         cursor.close()
@@ -71,12 +73,12 @@ def delete_especialidad(idEspecialidad):
         conexion.commit()
 
         if cursor.rowcount == 0:
-            return {"mensaje": "No existe"}
+            return jsonify({"mensaje": "No existe"}), 404
         
-        return {"mensaje": "Eliminado"}
+        return jsonify({"mensaje": "Eliminado"}), 200
     
     except Exception as e:
-        return {"error": str(e)}
+        return jsonify({"error": str(e)}), 500
     
     finally:
         cursor.close()

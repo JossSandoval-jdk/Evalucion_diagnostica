@@ -22,7 +22,7 @@ def get_horarios():
     cursor.close()
     conexion.close()
 
-    return jsonify(resultado)
+    return jsonify(resultado), 200
 
 
 def create_horario(diaSemana, h_inicio, h_fin, idMedico):
@@ -36,10 +36,10 @@ def create_horario(diaSemana, h_inicio, h_fin, idMedico):
         """, (diaSemana, h_inicio, h_fin, idMedico))
         
         conexion.commit()
-        return {"mensaje": "Horario creado"}
+        return jsonify({"mensaje": "Horario creado"}), 201
     
     except Exception as e:
-        return {"error": str(e)}
+        return jsonify({"error": str(e)}), 500
     
     finally:
         cursor.close()
@@ -60,10 +60,12 @@ def update_horario(idHorario, diaSemana, h_inicio, h_fin):
         """, (diaSemana, h_inicio, h_fin, idHorario))
         
         conexion.commit()
-        return {"mensaje": "Horario actualizado"}
+        if cursor.rowcount == 0:
+            return jsonify({"mensaje": "No existe"}), 404
+        return jsonify({"mensaje": "Horario actualizado"}), 200
     
     except Exception as e:
-        return {"error": str(e)}
+        return jsonify({"error": str(e)}), 500
     
     finally:
         cursor.close()
@@ -79,12 +81,12 @@ def delete_horario(idHorario):
         conexion.commit()
 
         if cursor.rowcount == 0:
-            return {"mensaje": "No existe"}
+            return jsonify({"mensaje": "No existe"}), 404
         
-        return {"mensaje": "Eliminado"}
+        return jsonify({"mensaje": "Eliminado"}), 200
     
     except Exception as e:
-        return {"error": str(e)}
+        return jsonify({"error": str(e)}), 500
     
     finally:
         cursor.close()

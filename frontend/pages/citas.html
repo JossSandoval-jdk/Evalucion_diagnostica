@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservar Cita</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Reservar Cita</h1>
+
+    <div>
+        <label>Especialidad:</label>
+        <select id="especialidadSelect"></select>
+    </div>
+
+    <div>
+        <label>Médico:</label>
+        <select id="medicoSelect"></select>
+    </div>
+
+    <div>
+        <label>Horario:</label>
+        <select id="horarioSelect"></select>
+    </div>
+
+    <div>
+        <label>Paciente:</label>
+        <select id="pacienteSelect"></select>
+    </div>
+
+    <div>
+        <label>Fecha:</label>
+        <input type="date" id="f_cita">
+    </div>
+
+    <div>
+        <label>Hora:</label>
+        <input type="time" id="h_cita">
+    </div>
+
+    <div>
+        <label>Estado:</label>
+        <select id="estadoCita">
+            <option value="pendiente">pendiente</option>
+            <option value="confirmada">confirmada</option>
+            <option value="cancelada">cancelada</option>
+        </select>
+    </div>
+
+    <button id="btnCrear">Crear cita</button>
+
+    <script src="{{ url_for('static', filename='js/citas.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Médicos por Especialidad</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Consultar Médicos</h1>
+
+    <div>
+        <label>Especialidad:</label>
+        <select id="especialidadSelect"></select>
+    </div>
+
+    <div id="medicosContainer" style="margin-top:20px;"></div>
+
+    <a href="/">Volver</a>
+
+    <script src="{{ url_for('static', filename='js/consultar.js') }}"></script>
+</body>
+</html>

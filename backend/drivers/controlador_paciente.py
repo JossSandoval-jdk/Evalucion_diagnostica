@@ -26,7 +26,7 @@ def get_pacientes():
     cursor.close()
     conexion.close()
 
-    return jsonify(resultado)
+    return jsonify(resultado), 200
 
 def create_paciente(codigo, password, nombPaciente, apePatPaciente, apeMatPaciente, sexo, direccion, email, dni):
     conexion = get_connection()
@@ -48,10 +48,10 @@ def create_paciente(codigo, password, nombPaciente, apePatPaciente, apeMatPacien
         """, (nombPaciente, apePatPaciente, apeMatPaciente, sexo, direccion, email, dni, idUsuario))
         
         conexion.commit()
-        return {"mensaje": "Paciente creado"}
+        return jsonify({"mensaje": "Paciente creado"}), 201
     
     except Exception as e:
-        return {"error": str(e)}
+        return jsonify({"error": str(e)}), 500
     
     finally:
         cursor.close()
@@ -76,10 +76,12 @@ def update_paciente(idPaciente, nombPaciente, apePatPaciente, apeMatPaciente, se
         """, (nombPaciente, apePatPaciente, apeMatPaciente, sexo, direccion, email, dni, idPaciente))
         
         conexion.commit()
-        return {"mensaje": "Paciente actualizado"}
+        if cursor.rowcount == 0:
+            return jsonify({"mensaje": "No existe"}), 404
+        return jsonify({"mensaje": "Paciente actualizado"}), 200
     
     except Exception as e:
-        return {"error": str(e)}
+        return jsonify({"error": str(e)}), 500
     
     finally:
         cursor.close()
@@ -95,12 +97,12 @@ def delete_paciente(idPaciente):
         conexion.commit()
 
         if cursor.rowcount == 0:
-            return {"mensaje": "No existe"}
+            return jsonify({"mensaje": "No existe"}), 404
         
-        return {"mensaje": "Eliminado"}
+        return jsonify({"mensaje": "Eliminado"}), 200
     
     except Exception as e:
-        return {"error": str(e)}
+        return jsonify({"error": str(e)}), 500
     
     finally:
         cursor.close()

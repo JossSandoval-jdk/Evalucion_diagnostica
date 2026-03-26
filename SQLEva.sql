@@ -18,6 +18,7 @@ CREATE TABLE MEDICO (
     direccion VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL,
     dni VARCHAR(8) NOT NULL UNIQUE,
+	imagen varchar(255) NOT NULL,
     idUsuario INT NOT NULL,
     idEspecialidad INT NOT NULL,
 

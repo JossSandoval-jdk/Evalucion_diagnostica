@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Sistema Médico</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<h1>Gestión de Datos</h1>
+
+<select id="tablaSelect">
+    <option value="medicos">Médicos</option>
+    <option value="pacientes">Pacientes</option>
+    <option value="especialidades">Especialidades</option>
+    <option value="horarios">Horarios</option>
+    <option value="citas">Citas</option>
+</select>
+
+<div class="controls">
+    <button onclick="cargarDatos()">Cargar</button>
+    <button id="btnNuevo" onclick="nuevo()">Nuevo</button>
+    <a href="/consultar">Ir a Consultar</a>
+</div>
+
+<table id="tablaDatos">
+    <thead></thead>
+    <tbody></tbody>
+</table>
+
+<div id="modalOverlay" class="modal-overlay" style="display:none;">
+    <div class="modal">
+        <button class="modal-close" onclick="cerrarModal()">✕</button>
+        <h2 id="modalTitle">Formulario</h2>
+        <form id="formulario"></form>
+        <div class="modal-actions">
+            <button type="button" onclick="guardar()">Guardar</button>
+            <button type="button" onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Ruta estática de Flask -->
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
